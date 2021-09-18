@@ -129,16 +129,23 @@ async def start(bot, update):
     ]]
     
     reply_markup = InlineKeyboardMarkup(buttons)
-    
-    await bot.send_photo(
-        chat_id=update.chat.id,
-        photo= MASSAGE_PHOTO,
-        caption=Translation.START_TEXT.format(
+
+    try:
+        await bot.send_photo(
+                chat_id=update.chat.id,
+                photo= MASSAGE_PHOTO,
+                caption=Translation.START_TEXT.format(
                 update.from_user.first_name),
-        reply_markup=reply_markup,
-        parse_mode="html",
-        reply_to_message_id=update.message_id
-    )
+                reply_markup=reply_markup,
+                parse_mode="html",
+                reply_to_message_id=update.message_id
+       )
+
+    except ButtonDataInvalid:
+        print(result[0])
+        
+    except Exception as e:
+        print(e)
 
 
 @Client.on_message(filters.command(["help"]) & filters.private, group=1)
@@ -182,9 +189,8 @@ async def about(bot, update):
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     
-    await bot.send_photo(
+    await bot.send_message(
         chat_id=update.chat.id,
-        photo= MASSAGE_PHOTO,
         caption=Translation.ABOUT_TEXT,
         reply_markup=reply_markup,
         disable_web_page_preview=True,
