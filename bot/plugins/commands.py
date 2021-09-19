@@ -135,7 +135,7 @@ async def start(bot, update):
                 chat_id=update.chat.id,
                 photo= MASSAGE_PHOTO,
                 caption=Translation.START_TEXT.format(
-                update.from_user.first_name),
+                        update.from_user.first_name),
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
@@ -175,6 +175,7 @@ async def help(bot, update):
         except Exception as e:
             print(e)
 
+
 @Client.on_message(filters.command(["about"]) & filters.private, group=1)
 async def about(bot, update):
     
@@ -191,7 +192,7 @@ async def about(bot, update):
     
     await bot.send_message(
         chat_id=update.chat.id,
-        caption=Translation.ABOUT_TEXT,
+        text=Translation.ABOUT_TEXT,
         reply_markup=reply_markup,
         disable_web_page_preview=True,
         parse_mode="html",
